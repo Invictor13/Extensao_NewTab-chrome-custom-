@@ -9,6 +9,7 @@
   --color-text-secondary: #4a5d4e;
   --color-border: #d4ebd7;
   --color-white: #ffffff;
+  --color-error: #c62828;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -117,6 +118,12 @@ body {
   margin-top: 16px;
   font-size: 13px;
   color: var(--color-green-primary);
+  min-height: 18px;
+  line-height: 1.4;
+}
+
+.newtab-status.error {
+  color: var(--color-error);
 }
 
 .page-footer {
