@@ -52,7 +52,7 @@ body {
   width: 56px;
   height: 56px;
   margin: 0 auto 16px;
-  background: linear-gradient(135deg, var(--color-green-primary), var(--color-green-dark));
+  display: block;
   border-radius: 50%;
   box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
 }
@@ -150,6 +150,11 @@ body {
   color: var(--color-green-primary);
   text-decoration: none;
   font-weight: 500;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid var(--color-green-primary);
+  outline-offset: 2px;
 }
 
 .footer-link:hover {
