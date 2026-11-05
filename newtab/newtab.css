@@ -48,21 +48,11 @@ body {
   box-shadow: 0 4px 16px rgba(46, 125, 50, 0.08);
 }
 
-.card-icon {
-  width: 56px;
-  height: 56px;
+.card-logo {
+  max-width: 220px;
+  height: auto;
   margin: 0 auto 16px;
-  background: linear-gradient(135deg, var(--color-green-primary), var(--color-green-dark));
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.25);
-}
-
-.card-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-green-dark);
-  margin-bottom: 8px;
-  letter-spacing: -0.3px;
+  display: block;
 }
 
 .card-description {
@@ -150,6 +140,11 @@ body {
   color: var(--color-green-primary);
   text-decoration: none;
   font-weight: 500;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid var(--color-green-primary);
+  outline-offset: 2px;
 }
 
 .footer-link:hover {
