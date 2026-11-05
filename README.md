@@ -58,7 +58,7 @@ Extensao_NewTab-chrome-custom-/
 ## 📌 Status das Etapas (Roadmap de PRs)
 
 - [x] **PR01 — Fundação da Extensão New Tab Custom:** Estrutura base, Manifest V3, layouts de popup e newtab, ícones verdes e módulo compartilhado.
-- [ ] **PR02 — Interface de Configuração e Persistência:** Implementação da validação avançada e persistência via `chrome.storage.local`.
+- [x] **PR02 — Interface de Configuração e Persistência:** Implementação da validação avançada e persistência via `chrome.storage.local`.
 - [ ] **PR03 — Redirecionamento da Nova Guia:** Redirecionamento automático instantâneo e tratamento de tela sem URL configurada.
 - [ ] **PR04 — Polimento, Documentação Final e Publicação.**
 
