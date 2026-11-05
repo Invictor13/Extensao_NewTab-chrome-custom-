@@ -70,6 +70,7 @@ A Chrome Web Store requer os seguintes ativos visuais para aprovação:
 - `assets/icons/icon16.png` — 16x16 px (Exibição em favicons e menus)
 - `assets/icons/icon48.png` — 48x48 px (Exibição na página `chrome://extensions`)
 - `assets/icons/icon128.png` — 128x128 px (Ícone principal para o Chrome Web Store e instalação)
+- `assets/logo.png` — Imagem oficial de apresentação do logotipo e nome New Tab Custom.
 
 ### 4.2 Imagens Promocionais (A serem geradas antes da submissão):
 1. **Pequeno Card Promocional (Small Promo Tile - Obrigatório):**

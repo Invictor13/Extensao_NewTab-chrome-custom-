@@ -42,10 +42,11 @@ Com uma identidade visual moderna em tons verdes e foco total em desempenho, a e
 ```text
 Extensao_NewTab-chrome-custom-/
 ├── assets/
-│   └── icons/
-│       ├── icon16.png        # Ícone da extensão para favicons e menus (16x16)
-│       ├── icon48.png        # Ícone da extensão para gerenciador de extensões (48x48)
-│       └── icon128.png       # Ícone de alta resolução para Chrome Web Store (128x128)
+│   ├── icons/
+│   │   ├── icon16.png        # Ícone da extensão para favicons e menus (16x16)
+│   │   ├── icon48.png        # Ícone da extensão para gerenciador de extensões (48x48)
+│   │   └── icon128.png       # Ícone de alta resolução para Chrome Web Store (128x128)
+│   └── logo.png              # Logotipo oficial em alta definição (símbolo + tipografia)
 ├── newtab/
 │   ├── newtab.html           # Página de substituição da Nova Guia (chrome_url_overrides)
 │   ├── newtab.css            # Estilos com identidade visual verde e responsiva
