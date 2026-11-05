@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "New Tab Custom",
+  "version": "1.0.0",
+  "description": "Personalize a página de Nova guia do Google Chrome com o endereço do seu site favorito.",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Configurar Nova Guia",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab/newtab.html"
+  },
+  "permissions": [
+    "storage"
+  ]
+}

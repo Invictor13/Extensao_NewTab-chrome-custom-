@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Guia</title>
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body>
+  <div class="newtab-wrapper">
+    <main class="welcome-card">
+      <div class="card-icon"></div>
+      <h1 class="card-title">New Tab Custom</h1>
+      <p class="card-description">
+        Sua nova guia personalizada está pronta para ser configurada.
+      </p>
+
+      <div class="instruction-box">
+        <p class="instruction-title">Como definir sua página inicial:</p>
+        <ol class="instruction-steps">
+          <li>Clique no ícone da extensão <strong>New Tab Custom</strong> na barra do Chrome.</li>
+          <li>Digite o endereço do site desejado (ex: <code>https://google.com</code>).</li>
+          <li>Clique em <strong>Salvar</strong>.</li>
+        </ol>
+      </div>
+
+      <div id="newtab-status" class="newtab-status" aria-live="polite"></div>
+    </main>
+
+    <footer class="page-footer">
+      <span class="author">Desenvolvido por <strong>Victor Ladislau Viana</strong></span>
+      <div class="links">
+        <a href="https://github.com/Invictor13" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+        <span class="dot">•</span>
+        <a href="https://www.linkedin.com/in/victor-ladislau-14402a170/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../shared/url-validator.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>

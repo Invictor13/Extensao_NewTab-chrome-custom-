@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurar Nova Guia</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="header">
+      <div class="logo-mark"></div>
+      <h1 class="title">New Tab Custom</h1>
+      <p class="subtitle">Personalize a sua página inicial</p>
+    </header>
+
+    <main class="content">
+      <div class="form-group">
+        <label for="url-input" class="label">Endereço do site:</label>
+        <input
+          type="text"
+          id="url-input"
+          class="input"
+          placeholder="https://exemplo.com"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-save" class="btn btn-primary">Salvar</button>
+        <button type="button" id="btn-clear" class="btn btn-secondary">Restaurar Padrão</button>
+      </div>
+
+      <div id="status-message" class="status-message" aria-live="polite"></div>
+    </main>
+
+    <footer class="footer">
+      <span class="author-text">Desenvolvido por <strong>Victor Ladislau Viana</strong></span>
+      <div class="social-links">
+        <a href="https://github.com/Invictor13" target="_blank" rel="noopener noreferrer" class="link">GitHub</a>
+        <span class="separator">•</span>
+        <a href="https://www.linkedin.com/in/victor-ladislau-14402a170/" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../shared/url-validator.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
