@@ -99,13 +99,27 @@ Antes de publicar na Chrome Web Store, certifique-se de cumprir todas as etapas:
 
 - [ ] **Conta de Desenvolvedor:** Possuir uma conta registrada no [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole) (taxa única de inscrição de $5 paga ao Google).
 - [ ] **Empacotamento ZIP:**
-  - Gerar o arquivo ZIP contendo apenas os arquivos essenciais de execução (`manifest.json`, `assets/`, `newtab/`, `popup/`, `shared/`).
-  - Não incluir pastas de testes (`test/`), `.git/`, ou arquivos `.md` no arquivo ZIP enviado para a loja.
-  - Comando sugerido:
+  - Gerar o arquivo ZIP oficial de produção executando o script automatizado do projeto:
     ```bash
-    zip -r new-tab-custom-v1.0.0.zip manifest.json assets newtab popup shared
+    node scripts/build-package.js
     ```
-- [ ] **Testes Locais:** Verificar que o arquivo descompactado carrega em modo desenvolvedor sem erros no console.
+  - O script criará o pacote em `dist/new-tab-custom-v<versao>.zip` (ex.: `dist/new-tab-custom-v1.0.0.zip`) contendo apenas os arquivos essenciais de execução (`manifest.json` diretamente na raiz, `assets/`, `newtab/`, `popup/` e `shared/`).
+  - **Atenção:** Nunca faça upload do arquivo ZIP gerado automaticamente pelo GitHub (Download ZIP do repositório), pois este contém arquivos de teste, documentação e metadados que violam ou incham os limites da Chrome Web Store.
+  - O script executa automaticamente a validação de integridade do ZIP (presença dos ícones, páginas e consistência com a versão do manifest).
+- [ ] **Testes Locais com o Pacote Gerado:**
+  - Descompacte o ZIP gerado em uma pasta temporária.
+  - No Chrome, acesse `chrome://extensions` e use "Carregar sem compactação" apontando para a pasta descompactada.
+  - Verifique que o ícone, o popup e o redirecionamento da nova guia funcionam perfeitamente sem erros no console.
+- [ ] **Upload no Chrome Web Store Developer Dashboard:**
+  - No dashboard da extensão, navegue até a aba **Pacote** (Package).
+  - Faça o upload do arquivo `dist/new-tab-custom-v<versao>.zip`.
+  - Confirme que a versão detectada pelo painel coincide com a versão pretendida (ex: 1.0.0).
+- [ ] **Como Preparar Versões Futuras:**
+  - Para lançar uma nova versão (ex.: 1.0.1 ou 1.1.0):
+    1. Atualize o campo `"version"` no `manifest.json`.
+    2. Execute `node scripts/build-package.js`.
+    3. O script criará automaticamente `dist/new-tab-custom-v<nova-versao>.zip` e executará todas as validações de integridade.
+    4. Submeta o novo arquivo ZIP no Developer Dashboard.
 - [ ] **Ficha do Produto:**
   - Inserir Nome, Descrição Curta (<= 132 chars) e Descrição Detalhada deste documento.
   - Fazer upload do ícone de 128x128 px.

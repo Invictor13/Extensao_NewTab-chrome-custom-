@@ -55,10 +55,13 @@ Extensao_NewTab-chrome-custom-/
 │   ├── popup.html            # Interface de configuração rápida (action popup)
 │   ├── popup.css             # Estilos do popup de configuração
 │   └── popup.js              # Manipulação de formulário, validação e persistência
+├── scripts/
+│   └── build-package.js      # Script de empacotamento oficial e validação para distribuição
 ├── shared/
 │   └── url-validator.js      # Módulo compartilhado para validação e normalização de URLs
 ├── test/
 │   ├── newtab-redirect.test.js      # Testes automatizados do ciclo da Nova Guia
+│   ├── package.test.js              # Testes automatizados de integridade do pacote ZIP
 │   └── popup-and-validator.test.js  # Testes automatizados de validação e popup
 ├── STORE.md                  # Materiais e especificações para submissão na Chrome Web Store
 ├── manifest.json             # Manifesto de configuração da extensão (V3)
@@ -100,6 +103,40 @@ Extensao_NewTab-chrome-custom-/
 
 ---
 
+## 📦 Pacote Oficial de Produção e Distribuição
+
+Para publicar a extensão na Chrome Web Store ou distribuí-la para testes, é necessário utilizar o pacote ZIP oficial de produção — gerado pelo script automatizado do projeto —, e **não** o ZIP de código-fonte fornecido automaticamente pelo GitHub.
+
+### Como gerar o pacote ZIP oficial:
+
+Requisito: **Node.js (v18+)** instalado.
+
+No terminal, a partir da raiz do projeto:
+```bash
+node scripts/build-package.js
+```
+
+### O que o processo realiza:
+1. **Leitura dinâmica do `manifest.json`:** Lê e valida o manifesto na raiz, extraindo com precisão a versão oficial (ex.: `1.0.0`).
+2. **Filtragem estrita de arquivos:**
+   - **Incluídos no ZIP:** `manifest.json` (diretamente na raiz), `assets/`, `newtab/`, `popup/` e `shared/`.
+   - **Excluídos do ZIP:** pastas de desenvolvimento (`.git/`, `test/`, `scripts/`, `node_modules/`), arquivos de documentação (`README.md`, `STORE.md`), arquivos ocultos (`.DS_Store`, `Thumbs.db`) e relatórios.
+3. **Criação do ZIP:** Gera o arquivo padronizado na pasta `dist/` com a nomenclatura oficial `dist/new-tab-custom-v<versao>.zip` (ex: `dist/new-tab-custom-v1.0.0.zip`).
+4. **Validação automática instantânea:**
+   - Confirmação de `manifest.json` na raiz do pacote.
+   - Verificação de integridade sintática do JSON do manifesto.
+   - Confirmação de existência dentro do pacote de todos os arquivos referenciados pelo manifesto (ícones de 16, 48 e 128 px, páginas HTML do popup e newtab, scripts e estilos).
+   - Confirmação de ausência total de arquivos de desenvolvimento proibidos.
+
+### Como instalar o pacote ZIP manualmente para testes:
+1. Descompacte o arquivo `dist/new-tab-custom-v<versao>.zip` em uma pasta local limpa de sua escolha.
+2. Abra o Chrome e navegue até `chrome://extensions`.
+3. Ative o **Modo do desenvolvedor** no canto superior direito.
+4. Clique em **"Carregar sem compactação"** e selecione a pasta descompactada.
+5. Verifique o funcionamento da extensão em ambiente idêntico ao de produção.
+
+---
+
 ## 🧪 Testes Automatizados
 
 O projeto conta com uma suíte abrangente de testes automatizados utilizando o test runner nativo do Node.js, sem dependências externas.
@@ -120,6 +157,7 @@ node --test
 - Redirecionamento automático e comportamento com e sem URL configurada.
 - Resiliência contra loops repetidos ou redirecionamentos para a própria página de nova guia.
 - Tratamento gracioso de falhas no armazenamento.
+- **Geração e integridade do pacote ZIP:** verificação de presença do `manifest.json` na raiz, correspondência de versão, inclusão de todos os arquivos necessários e exclusão estrita de arquivos proibidos.
 
 ---
 
@@ -129,6 +167,8 @@ node --test
 - [x] **PR02 — Interface de Configuração e Persistência:** Implementação da validação avançada e persistência via `chrome.storage.local`.
 - [x] **PR03 — Redirecionamento da Nova Guia:** Redirecionamento automático instantâneo, tela de boas-vindas e proteção contra loops.
 - [x] **PR04 — Polimento Final, Documentação e Preparação para Chrome Web Store:** Auditoria técnica completa, aprimoramentos de acessibilidade, documentação expandida e kit de submissão para a loja.
+- [x] **PR05 — Refinamento da Experiência de Salvamento e Redirecionamento Instantâneo:** Ajustes de transição, mitigação de flashes de tela e polimento de UX.
+- [x] **PR06 — Pacote Oficial de Distribuição e Preparação para Release:** Automação e validação estrita da geração do ZIP oficial de produção (`dist/new-tab-custom-v1.0.0.zip`) sem arquivos de desenvolvimento.
 
 ---
 
