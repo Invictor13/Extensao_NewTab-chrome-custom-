@@ -194,4 +194,6 @@ A extensão prioriza a segurança e transparência: os dados são salvos exclusi
 
 ## 📄 Licença
 
-Os direitos autorais deste projeto pertencem ao desenvolvedor Victor Ladislau Viana. A definição e formalização dos termos de licença de uso do código-fonte permanecem a critério do proprietário do repositório.
+Este projeto é distribuído sob os termos da licença MIT. Para mais detalhes, consulte o arquivo [LICENSE](LICENSE).
+
+Copyright (c) 2026 Victor Ladislau Viana.
