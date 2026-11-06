@@ -21,11 +21,27 @@ function createMockEnvironment({
     }
   };
 
+  const wrapperElement = {
+    className: 'newtab-wrapper',
+    classList: {
+      _classes: new Set(),
+      add(cls) { this._classes.add(cls); },
+      remove(cls) { this._classes.delete(cls); },
+      contains(cls) { return this._classes.has(cls); }
+    }
+  };
+
   const documentListeners = {};
   const mockDocument = {
     readyState: 'complete',
     getElementById(id) {
       if (id === 'newtab-status') return statusElement;
+      return null;
+    },
+    querySelector(selector) {
+      if (selector === '.newtab-wrapper' || selector === '.welcome-card') {
+        return wrapperElement;
+      }
       return null;
     },
     addEventListener(event, handler) {
@@ -96,6 +112,7 @@ function createMockEnvironment({
     mockChrome,
     mockSessionStorage,
     statusElement,
+    wrapperElement,
     replacedUrls,
     assignedHrefs,
     documentListeners,
@@ -123,33 +140,35 @@ function runNewTabScript(env) {
   vm.runInContext(newTabCode, context);
 }
 
-test('New Tab Redirect: redirects to valid HTTPS URL', () => {
+test('New Tab Redirect: redirects to valid HTTPS URL immediately without UI flash', () => {
   const env = createMockEnvironment({ savedUrl: 'https://example.com' });
   runNewTabScript(env);
 
+  // Redirection is triggered immediately
   assert.equal(env.replacedUrls.length, 1);
   assert.equal(env.replacedUrls[0], 'https://example.com');
-  assert.equal(env.statusElement.textContent, 'Redirecionando...');
-  assert.equal(env.statusElement.classList.contains('error'), false);
+  // UI wrapper remains unrendered/hidden to avoid any flash of extension content
+  assert.equal(env.wrapperElement.classList.contains('visible'), false);
+  assert.equal(env.statusElement.textContent, '');
   // Also records attempt in sessionStorage
   assert.equal(env.sessionStore['newtab_redirect_count'], '1');
 });
 
-test('New Tab Redirect: redirects to valid HTTP URL (e.g. localhost)', () => {
+test('New Tab Redirect: redirects to valid HTTP URL (e.g. localhost) immediately without UI flash', () => {
   const env = createMockEnvironment({ savedUrl: 'http://localhost:3000' });
   runNewTabScript(env);
 
   assert.equal(env.replacedUrls.length, 1);
   assert.equal(env.replacedUrls[0], 'http://localhost:3000');
-  assert.equal(env.statusElement.textContent, 'Redirecionando...');
-  assert.equal(env.statusElement.classList.contains('error'), false);
+  assert.equal(env.wrapperElement.classList.contains('visible'), false);
 });
 
-test('New Tab Redirect: no URL configured keeps functional welcome screen without redirect', () => {
+test('New Tab Redirect: no URL configured reveals functional welcome screen without redirect', () => {
   const env = createMockEnvironment({ savedUrl: undefined });
   runNewTabScript(env);
 
   assert.equal(env.replacedUrls.length, 0);
+  assert.equal(env.wrapperElement.classList.contains('visible'), true);
   assert.equal(env.statusElement.textContent, 'Nenhum endereço configurado. Use o ícone da extensão para definir.');
   assert.equal(env.statusElement.classList.contains('error'), false);
 });
@@ -259,9 +278,38 @@ test('New Tab Redirect: detects and halts rapid redirect loops in the same tab',
   runNewTabScript(env);
 
   assert.equal(env.replacedUrls.length, 0);
+  assert.equal(env.wrapperElement.classList.contains('visible'), true);
   assert.equal(
     env.statusElement.textContent,
     'Loop de redirecionamento detectado. O redirecionamento automático foi interrompido.'
   );
   assert.equal(env.statusElement.classList.contains('error'), true);
+});
+
+test('New Tab Redirect: Cenário E - updates to configured address redirect to new target on subsequent new tabs', () => {
+  const sharedStorage = { customNewTabUrl: 'https://initial-site.com' };
+
+  // First new tab opens initial-site
+  const env1 = createMockEnvironment();
+  Object.assign(env1.mockChrome.storage.local, {
+    get(keys, cb) {
+      cb({ customNewTabUrl: sharedStorage.customNewTabUrl });
+    }
+  });
+  runNewTabScript(env1);
+  assert.equal(env1.replacedUrls[0], 'https://initial-site.com');
+
+  // User updates configured address
+  sharedStorage.customNewTabUrl = 'https://updated-site.com';
+
+  // Subsequent new tab opens updated site
+  const env2 = createMockEnvironment();
+  Object.assign(env2.mockChrome.storage.local, {
+    get(keys, cb) {
+      cb({ customNewTabUrl: sharedStorage.customNewTabUrl });
+    }
+  });
+  runNewTabScript(env2);
+  assert.equal(env2.replacedUrls[0], 'https://updated-site.com');
+  assert.equal(env2.wrapperElement.classList.contains('visible'), false);
 });

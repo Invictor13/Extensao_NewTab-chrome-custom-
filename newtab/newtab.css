@@ -30,11 +30,24 @@ body {
 
 .newtab-wrapper {
   flex: 1;
-  display: flex;
+  display: none; /* Oculto por padrão para evitar flash da interface quando há URL configurada */
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 32px 16px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
+.newtab-wrapper.visible {
+  display: flex;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newtab-wrapper {
+    transition: none !important;
+  }
 }
 
 .welcome-card {
