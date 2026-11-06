@@ -38,6 +38,7 @@ const FORBIDDEN_PATTERNS = [
   /^test(\/|$)/,
   /^scripts(\/|$)/,
   /^dist(\/|$)/,
+  /^assets\/store(\/|$)/,
   /\.md$/i,
   /\.DS_Store$/i,
   /Thumbs\.db$/i,
@@ -55,10 +56,16 @@ function collectFiles(dirPath, relativeTo = ROOT_DIR) {
 
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
+    const relPath = path.relative(relativeTo, fullPath).split(path.sep).join('/');
+
+    // Ignora pastas ou arquivos correspondentes a padrões proibidos
+    if (FORBIDDEN_PATTERNS.some((p) => p.test(relPath))) {
+      continue;
+    }
+
     if (entry.isDirectory()) {
       files = files.concat(collectFiles(fullPath, relativeTo));
     } else if (entry.isFile()) {
-      const relPath = path.relative(relativeTo, fullPath).split(path.sep).join('/');
       files.push(relPath);
     }
   }

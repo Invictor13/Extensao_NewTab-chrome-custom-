@@ -10,6 +10,10 @@ Por padrão, os navegadores baseados no Chromium não oferecem uma forma direta 
 
 Com uma identidade visual moderna em tons verdes e foco total em desempenho, a extensão substitui a página de nova guia padrão e navega imediatamente para o site configurado — sem intermediários, sem atrasos e sem coletar qualquer tipo de dado.
 
+- **Nome Oficial:** New Tab Custom
+- **Slogan:** Sua nova guia, do seu jeito.
+- **Descrição Curta:** Personalize a sua página de Nova guia do Google Chrome com qualquer endereço de site de forma rápida, leve e elegante.
+
 ---
 
 ## ✨ Funcionalidades Principais
@@ -46,8 +50,14 @@ Extensao_NewTab-chrome-custom-/
 │   │   ├── icon16.png        # Ícone da extensão para favicons e menus (16x16)
 │   │   ├── icon48.png        # Ícone da extensão para gerenciador de extensões (48x48)
 │   │   └── icon128.png       # Ícone de alta resolução para Chrome Web Store (128x128)
-│   ├── store/                # Diretório reservado para capturas e materiais visuais da loja
-│   │   └── README.md         # Diretrizes técnicas para screenshots reais e promo tiles
+│   ├── store/                # Materiais visuais e textos para Chrome Web Store
+│   │   ├── screenshots/      # Capturas de tela reais da extensão
+│   │   │   ├── 01-configuracao-url-popup.png   # Configuração de URL no popup
+│   │   │   ├── 02-site-salvo-sucesso.png       # Confirmação de salvamento com sucesso
+│   │   │   ├── 03-nova-guia-personalizada.png  # Nova guia aberta no site configurado
+│   │   │   └── README.md                       # Documentação técnica e análise das capturas
+│   │   ├── README.md         # Estrutura e diretrizes de materiais da loja
+│   │   └── STORE_LISTING.md  # Ficha técnica oficial e textos completos para a loja
 │   └── logo.png              # Logotipo oficial em alta definição (símbolo + tipografia)
 ├── newtab/
 │   ├── newtab.html           # Página de substituição da Nova Guia (chrome_url_overrides)
@@ -65,6 +75,7 @@ Extensao_NewTab-chrome-custom-/
 │   ├── newtab-redirect.test.js      # Testes automatizados do ciclo da Nova Guia
 │   ├── package.test.js              # Testes automatizados de integridade do pacote ZIP
 │   └── popup-and-validator.test.js  # Testes automatizados de validação e popup
+├── LICENSE                   # Licença oficial MIT
 ├── PRIVACY.md                # Política de Privacidade e transparência de dados
 ├── STORE.md                  # Materiais e especificações para submissão na Chrome Web Store
 ├── manifest.json             # Manifesto de configuração da extensão (V3)
@@ -106,6 +117,16 @@ Extensao_NewTab-chrome-custom-/
 
 ---
 
+## 🏪 Preparação para a Chrome Web Store
+
+Todos os materiais, textos de apresentação, metadados e diretrizes técnicas para publicação no painel do desenvolvedor da Google Chrome Web Store estão preparados e organizados nos seguintes documentos:
+
+- **Ficha Técnica e Textos do Listing:** Consulte [`assets/store/STORE_LISTING.md`](assets/store/STORE_LISTING.md) para textos oficiais (nome, descrições curta e completa, categoria, idioma e declarações de privacidade).
+- **Capturas de Tela Reais:** Consulte [`assets/store/screenshots/`](assets/store/screenshots/) e seu [`README.md`](assets/store/screenshots/README.md) para visualização das 3 telas autênticas e análise técnica de resolução.
+- **Checklist Geral de Publicação:** Consulte [`STORE.md`](STORE.md) para o passo a passo completo de submissão na loja.
+
+---
+
 ## 📦 Pacote Oficial de Produção e Distribuição
 
 Para publicar a extensão na Chrome Web Store ou distribuí-la para testes, é necessário utilizar o pacote ZIP oficial de produção — gerado pelo script automatizado do projeto —, e **não** o ZIP de código-fonte fornecido automaticamente pelo GitHub.
@@ -122,8 +143,8 @@ node scripts/build-package.js
 ### O que o processo realiza:
 1. **Leitura dinâmica do `manifest.json`:** Lê e valida o manifesto na raiz, extraindo com precisão a versão oficial (ex.: `1.0.0`).
 2. **Filtragem estrita de arquivos:**
-   - **Incluídos no ZIP:** `manifest.json` (diretamente na raiz), `assets/`, `newtab/`, `popup/` e `shared/`.
-   - **Excluídos do ZIP:** pastas de desenvolvimento (`.git/`, `test/`, `scripts/`, `node_modules/`), arquivos de documentação (`README.md`, `STORE.md`), arquivos ocultos (`.DS_Store`, `Thumbs.db`) e relatórios.
+   - **Incluídos no ZIP:** `manifest.json` (diretamente na raiz), `assets/` (ícones e logo), `newtab/`, `popup/` e `shared/`.
+   - **Excluídos do ZIP:** pasta de materiais de loja (`assets/store/`), pastas de desenvolvimento (`.git/`, `test/`, `scripts/`, `node_modules/`), arquivos de documentação (`README.md`, `STORE.md`, `PRIVACY.md`, `LICENSE`), arquivos ocultos (`.DS_Store`, `Thumbs.db`) e relatórios.
 3. **Criação do ZIP:** Gera o arquivo padronizado na pasta `dist/` com a nomenclatura oficial `dist/new-tab-custom-v<versao>.zip` (ex: `dist/new-tab-custom-v1.0.0.zip`).
 4. **Validação automática instantânea:**
    - Confirmação de `manifest.json` na raiz do pacote.
@@ -174,6 +195,8 @@ node --test
 - [x] **PR06 — Pacote Oficial de Distribuição e Preparação para Release:** Automação e validação estrita da geração do ZIP oficial de produção (`dist/new-tab-custom-v1.0.0.zip`) sem arquivos de desenvolvimento.
 - [x] **PR07 — Auditoria de Conformidade e Preparação para Chrome Web Store:** Auditoria completa e diagnósticos técnicos para a loja.
 - [x] **PR08 — Documentação, Política de Privacidade e Preparação dos Materiais da Chrome Web Store:** Criação de `PRIVACY.md`, estruturação de `assets/store/`, revisão de requisitos e refinamento documental.
+- [x] **PR09 — Formalização da Licença MIT e Revisão de Conformidade:** Inclusão formal do arquivo `LICENSE` com a licença MIT, copyright de Victor Ladislau Viana e alinhamento de referências em toda a documentação.
+- [x] **PR10 — Preparação dos Assets Visuais e Listing da Chrome Web Store:** Incorporação das 3 capturas de tela reais autênticas em `assets/store/screenshots/`, documentação técnica das capturas, criação do arquivo oficial `assets/store/STORE_LISTING.md` com textos da loja sem superlativos ou dados fictícios, atualização do checklist de publicação e exclusão dos materiais de store do pacote ZIP distribuível.
 
 ---
 

@@ -2,12 +2,19 @@
 
 Este documento reúne todas as informações, textos comerciais, requisitos de design, justificativas de permissões e o checklist detalhado necessário para a submissão e publicação da extensão **New Tab Custom** no [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole).
 
+> **Atenção:** Os materiais textuais e específicos da ficha da loja estão centralizados no arquivo oficial:
+> 👉 **[`assets/store/STORE_LISTING.md`](assets/store/STORE_LISTING.md)**.
+> As capturas de tela reais e suas análises técnicas encontram-se em:
+> 👉 **[`assets/store/screenshots/`](assets/store/screenshots/)**.
+
 ---
 
 ## 1. Dados Principais da Extensão
 
 - **Nome Comercial / Oficial:** New Tab Custom
-- **Categoria sugerida:** Produtividade (*Productivity*) ou Ferramentas de Pesquisa (*Search Tools*)
+- **Slogan:** Sua nova guia, do seu jeito.
+- **Categoria sugerida:** Produtividade (*Productivity*)
+  - *Justificativa:* Otimiza o fluxo de trabalho do usuário ao abrir automaticamente sites ou ferramentas prioritárias em cada nova guia aberta.
 - **Idioma principal:** Português (Brasil) — `pt-BR`
 - **Público-alvo:** Usuários que desejam definir uma página inicial customizada ao abrir uma nova guia no Google Chrome.
 - **Preço:** Gratuito
@@ -18,33 +25,26 @@ Este documento reúne todas as informações, textos comerciais, requisitos de d
 ## 2. Textos para a Ficha na Chrome Web Store
 
 ### 2.1 Descrição Curta (Resumo — máximo 132 caracteres)
+> Sua nova guia, do seu jeito.
+
+*(Versão alternativa para o limite de 132 caracteres:)*
 > Personalize a sua página de Nova guia do Google Chrome com qualquer endereço de site de forma rápida, leve e elegante.
 
 *(Contagem: 115 caracteres com espaços — dentro do limite máximo de 132 caracteres permitido pela Chrome Web Store).*
 
 ### 2.2 Descrição Detalhada
 
-```text
-Defina facilmente qualquer site como sua página inicial ao abrir uma Nova Guia no Google Chrome!
+A descrição detalhada completa, refinada sem termos exagerados ou funcionalidades fictícias, está documentada em [`assets/store/STORE_LISTING.md`](assets/store/STORE_LISTING.md#23-descrição-completa-store-listing-description).
 
-O New Tab Custom é uma extensão minimalista, rápida e elegante criada para oferecer total liberdade sobre a sua experiência de navegação. Abra seu buscador preferido, dashboard de trabalho, painel de anotações ou intranet instantaneamente a cada nova guia.
-
-Principais Recursos:
-⚡ Redirecionamento Instantâneo: Abre o endereço configurado sem telas intermediárias ou atrasos perceptíveis.
-🎨 Visual Elegante e Minimalista: Interface limpa com design moderno em tons verdes, focada em simplicidade e usabilidade.
-🔒 Segurança e Privacidade Total: Sem rastreadores, sem telemetria e sem coleta de dados. Seu endereço configurado fica salvo exclusivamente na memória local do seu próprio navegador.
-⚙️ Validação Inteligente: Digite domínios simples como "google.com" e a extensão normaliza automaticamente com segurança para HTTPS.
-💻 Suporte para Desenvolvedores: Aceita servidores locais e portas customizadas (ex: http://localhost:3000).
-🔄 Restaurar Padrão: Remova a URL a qualquer momento com apenas um clique.
-
-Como Funciona:
-1. Instale a extensão e clique no ícone do New Tab Custom na barra de ferramentas.
-2. Digite o endereço do site que você deseja abrir (ex: https://notion.so, google.com ou seu painel de tarefas).
-3. Clique em "Salvar".
-4. Pronto! Sempre que você abrir uma nova guia, ela será carregada diretamente no endereço escolhido.
-
-Desenvolvido com foco em desempenho (Manifest V3 e zero dependências pesadas).
-```
+Destaques reais da extensão:
+- Personalização do endereço da nova guia.
+- Configuração simples via popup.
+- Persistência local da URL via `chrome.storage.local`.
+- Experiência leve e direta.
+- Sem necessidade de criar conta.
+- Validação automática de domínios com HTTPS.
+- Suporte para desenvolvimento local (`localhost`).
+- Botão "Restaurar Padrão" em um clique.
 
 ---
 
@@ -60,12 +60,11 @@ Ao submeter a extensão, o Google Developer Dashboard solicitará a justificativ
 ### Práticas de Privacidade (Single Purpose):
 - **Coleta de dados:** Nenhuma informação pessoal ou de identificação do usuário é coletada, transmitida ou vendida.
 - **Conexões externas:** A extensão não realiza chamadas a APIs de analytics, servidores remotos ou anunciantes.
+- **Código remoto:** Não há execução de código hospedado remotamente.
 
 ---
 
 ## 4. Material Visual e Especificações Gráficas
-
-A Chrome Web Store requer os seguintes ativos visuais para aprovação:
 
 ### 4.1 Ícones do Pacote (Já presentes no repositório):
 - `assets/icons/icon16.png` — 16x16 px (Exibição em favicons e menus)
@@ -78,23 +77,22 @@ As imagens promocionais não são obrigatórias para submissão, mas fornecem de
 1. **Pequeno Card Promocional (Small Promo Tile - Opcional, recomendado para catálogo):**
    - Dimensões: **440 x 280 pixels**
    - Formato: PNG ou JPEG
-   - Conteúdo sugerido: Fundo em gradiente suave verde (#e8f5e9 a #ffffff), logotipo centralizado do New Tab Custom e título legível.
+   - Conteúdo sugerido: Fundo em tons verdes, logotipo centralizado do New Tab Custom e título legível.
 2. **Grande Card Promocional (Marquee Promo Tile - Opcional, recomendado para destaque editorial):**
    - Dimensões: **1400 x 560 pixels**
    - Formato: PNG ou JPEG
 
-### 4.3 Capturas de Tela (Screenshots - Obrigatório pelo menos 1):
-A loja exige no mínimo 1 e permite até 5 capturas de tela reais da extensão.
-- **Dimensões recomendadas:** **1280 x 800 pixels** (ou **640 x 400 pixels**), sem cantos arredondados artificiais e sem barras de rolagem desnecessárias.
-- **Autenticidade:** Devem ser capturas reais da extensão em funcionamento no Chrome. Não utilizar mockups fictícios.
-- **Screenshot 1 — Interface do Popup:**
-  - Mostra a caixa de diálogo de configuração com um endereço preenchido (ex.: `https://google.com`), botão "Salvar" e mensagem de sucesso em verde.
-- **Screenshot 2 — Tela Alternativa da Nova Guia (Sem URL configurada):**
-  - Mostra o card de boas-vindas centralizado da página `newtab.html`, com as instruções elegantes de configuração passo a passo.
-- **Screenshot 3 — Exemplo de Redirecionamento em Ação:**
-  - Demonstração do navegador abrindo o site configurado na nova aba.
+### 4.3 Capturas de Tela (Screenshots Reais):
+As capturas de tela autênticas fornecidas pelo desenvolvedor estão armazenadas em `assets/store/screenshots/`:
+- `01-configuracao-url-popup.png` (314 × 422 px)
+- `02-site-salvo-sucesso.png` (316 × 424 px)
+- `03-nova-guia-personalizada.png` (1242 × 822 px)
 
-As diretrizes detalhadas de organização dos arquivos visuais da loja encontram-se em `assets/store/README.md`.
+> **Status Técnico das Capturas:**
+> - As imagens originais foram mantidas 100% autênticas e sem qualquer redimensionamento artificial.
+> - As imagens `01-configuracao-url-popup.png` (314×422 px) e `02-site-salvo-sucesso.png` (316×424 px) focam exclusivamente no popup e **não estão prontas** para upload direto como screenshots principais da Chrome Web Store, pois a loja exige capturas da janela do navegador (1280×800 ou 640×400 px).
+> - A imagem `03-nova-guia-personalizada.png` (1242×822 px) também **precisa de adequação técnica** de resolução para se enquadrar perfeitamente no formato aceito (1280×800 px) antes da submissão final.
+> - Detalhes e orientações completas em [`assets/store/screenshots/README.md`](assets/store/screenshots/README.md).
 
 ---
 
@@ -108,9 +106,9 @@ Antes de publicar na Chrome Web Store, certifique-se de cumprir todas as etapas:
     ```bash
     node scripts/build-package.js
     ```
-  - O script criará o pacote em `dist/new-tab-custom-v<versao>.zip` (ex.: `dist/new-tab-custom-v1.0.0.zip`) contendo apenas os arquivos essenciais de execução (`manifest.json` diretamente na raiz, `assets/`, `newtab/`, `popup/` e `shared/`).
+  - O script criará o pacote em `dist/new-tab-custom-v<versao>.zip` (ex.: `dist/new-tab-custom-v1.0.0.zip`) contendo apenas os arquivos essenciais de execução (`manifest.json` diretamente na raiz, `assets/icons/`, `assets/logo.png`, `newtab/`, `popup/` e `shared/`). A pasta `assets/store/` é excluída automaticamente do pacote.
   - **Atenção:** Nunca faça upload do arquivo ZIP gerado automaticamente pelo GitHub (Download ZIP do repositório), pois este contém arquivos de teste, documentação e metadados que violam ou incham os limites da Chrome Web Store.
-  - O script executa automaticamente a validação de integridade do ZIP (presença dos ícones, páginas e consistência com a versão do manifest).
+  - O script executa automaticamente a validação de integridade do ZIP.
 - [ ] **Testes Locais com o Pacote Gerado:**
   - Descompacte o ZIP gerado em uma pasta temporária.
   - No Chrome, acesse `chrome://extensions` e use "Carregar sem compactação" apontando para a pasta descompactada.
@@ -119,19 +117,13 @@ Antes de publicar na Chrome Web Store, certifique-se de cumprir todas as etapas:
   - No dashboard da extensão, navegue até a aba **Pacote** (Package).
   - Faça o upload do arquivo `dist/new-tab-custom-v<versao>.zip`.
   - Confirme que a versão detectada pelo painel coincide com a versão pretendida (ex: 1.0.0).
-- [ ] **Como Preparar Versões Futuras:**
-  - Para lançar uma nova versão (ex.: 1.0.1 ou 1.1.0):
-    1. Atualize o campo `"version"` no `manifest.json`.
-    2. Execute `node scripts/build-package.js`.
-    3. O script criará automaticamente `dist/new-tab-custom-v<nova-versao>.zip` e executará todas as validações de integridade.
-    4. Submeta o novo arquivo ZIP no Developer Dashboard.
 - [ ] **Ficha do Produto (Store Listing):**
-  - Inserir Nome, Descrição Curta (<= 132 chars) e Descrição Detalhada deste documento.
+  - Inserir Nome, Descrição Curta (<= 132 chars) e Descrição Completa conforme [`assets/store/STORE_LISTING.md`](assets/store/STORE_LISTING.md).
   - Fazer upload do ícone de 128x128 px (`assets/icons/icon128.png`).
-  - Fazer upload de pelo menos 1 screenshot real (1280x800 px).
+  - Fazer upload das capturas de tela finais adequadas à resolução exigida (1280x800 px).
   - (Opcional) Fazer upload do card promocional pequeno (440x280 px).
 - [ ] **Aba de Privacidade (Privacy Practices):**
-  - Selecionar a categoria correta ("Produtividade").
+  - Selecionar a categoria "Produtividade".
   - Preencher a descrição de propósito único (*Single Purpose*).
   - Declarar a justificativa para a permissão `storage`.
   - Confirmar que não há execução de código remoto (*"No, I am not using remote code"*).
