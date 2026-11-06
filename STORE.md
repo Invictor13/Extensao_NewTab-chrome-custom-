@@ -72,24 +72,28 @@ A Chrome Web Store requer os seguintes ativos visuais para aprovação:
 - `assets/icons/icon128.png` — 128x128 px (Ícone principal para o Chrome Web Store e instalação)
 - `assets/logo.png` — Imagem oficial de apresentação do logotipo e nome New Tab Custom.
 
-### 4.2 Imagens Promocionais (A serem geradas antes da submissão):
-1. **Pequeno Card Promocional (Small Promo Tile - Obrigatório):**
+### 4.2 Imagens Promocionais (Materiais Opcionais):
+As imagens promocionais não são obrigatórias para submissão, mas fornecem destaque e melhor visualização na loja:
+1. **Pequeno Card Promocional (Small Promo Tile - Opcional, recomendado para catálogo):**
    - Dimensões: **440 x 280 pixels**
    - Formato: PNG ou JPEG
    - Conteúdo sugerido: Fundo em gradiente suave verde (#e8f5e9 a #ffffff), logotipo centralizado do New Tab Custom e título legível.
-2. **Grande Card Promocional (Marquee Promo Tile - Opcional, recomendado para destaque):**
+2. **Grande Card Promocional (Marquee Promo Tile - Opcional, recomendado para destaque editorial):**
    - Dimensões: **1400 x 560 pixels**
    - Formato: PNG ou JPEG
 
-### 4.3 Sugestões de Capturas de Tela (Screenshots):
-A loja exige no mínimo 1 e permite até 5 capturas de tela.
-- **Dimensões recomendadas:** **1280 x 800 pixels** (ou **640 x 400 pixels**), sem cantos arredondados e sem barras de rolagem desnecessárias.
+### 4.3 Capturas de Tela (Screenshots - Obrigatório pelo menos 1):
+A loja exige no mínimo 1 e permite até 5 capturas de tela reais da extensão.
+- **Dimensões recomendadas:** **1280 x 800 pixels** (ou **640 x 400 pixels**), sem cantos arredondados artificiais e sem barras de rolagem desnecessárias.
+- **Autenticidade:** Devem ser capturas reais da extensão em funcionamento no Chrome. Não utilizar mockups fictícios.
 - **Screenshot 1 — Interface do Popup:**
   - Mostra a caixa de diálogo de configuração com um endereço preenchido (ex.: `https://google.com`), botão "Salvar" e mensagem de sucesso em verde.
 - **Screenshot 2 — Tela Alternativa da Nova Guia (Sem URL configurada):**
   - Mostra o card de boas-vindas centralizado da página `newtab.html`, com as instruções elegantes de configuração passo a passo.
 - **Screenshot 3 — Exemplo de Redirecionamento em Ação:**
-  - Demonstração do navegador abrindo instantaneamente o site configurado na nova aba.
+  - Demonstração do navegador abrindo o site configurado na nova aba.
+
+As diretrizes detalhadas de organização dos arquivos visuais da loja encontram-se em `assets/store/README.md`.
 
 ---
 
@@ -97,7 +101,7 @@ A loja exige no mínimo 1 e permite até 5 capturas de tela.
 
 Antes de publicar na Chrome Web Store, certifique-se de cumprir todas as etapas:
 
-- [ ] **Conta de Desenvolvedor:** Possuir uma conta registrada no [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole) (taxa única de inscrição de $5 paga ao Google).
+- [ ] **Conta de Desenvolvedor:** Possuir uma conta registrada no [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole) (taxa única de inscrição de $5 paga ao Google) e verificação em duas etapas (2FA) ativada.
 - [ ] **Empacotamento ZIP:**
   - Gerar o arquivo ZIP oficial de produção executando o script automatizado do projeto:
     ```bash
@@ -120,12 +124,16 @@ Antes de publicar na Chrome Web Store, certifique-se de cumprir todas as etapas:
     2. Execute `node scripts/build-package.js`.
     3. O script criará automaticamente `dist/new-tab-custom-v<nova-versao>.zip` e executará todas as validações de integridade.
     4. Submeta o novo arquivo ZIP no Developer Dashboard.
-- [ ] **Ficha do Produto:**
+- [ ] **Ficha do Produto (Store Listing):**
   - Inserir Nome, Descrição Curta (<= 132 chars) e Descrição Detalhada deste documento.
-  - Fazer upload do ícone de 128x128 px.
-  - Fazer upload de pelo menos 1 screenshot (1280x800 px) e do card promocional (440x280 px).
-- [ ] **Aba de Privacidade:**
+  - Fazer upload do ícone de 128x128 px (`assets/icons/icon128.png`).
+  - Fazer upload de pelo menos 1 screenshot real (1280x800 px).
+  - (Opcional) Fazer upload do card promocional pequeno (440x280 px).
+- [ ] **Aba de Privacidade (Privacy Practices):**
   - Selecionar a categoria correta ("Produtividade").
+  - Preencher a descrição de propósito único (*Single Purpose*).
   - Declarar a justificativa para a permissão `storage`.
-  - Confirmar que a extensão não coleta dados do usuário e está em conformidade com as políticas de Single Purpose da Google.
+  - Confirmar que não há execução de código remoto (*"No, I am not using remote code"*).
+  - Confirmar a política de dados: a extensão utiliza apenas armazenamento local (`chrome.storage.local`) e não coleta nem transmite dados pessoais a servidores externos, em conformidade com [PRIVACY.md](PRIVACY.md).
+  - Informar a URL pública da Política de Privacidade.
 - [ ] **Revisão e Envio:** Clicar em "Submit for Review" (Enviar para análise).
