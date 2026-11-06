@@ -78,6 +78,10 @@ test('Popup integration: loading, saving, removing, and error handling', () => {
     'url-input': new MockElement('url-input'),
     'btn-save': new MockElement('btn-save'),
     'btn-clear': new MockElement('btn-clear'),
+    'status-card': new MockElement('status-card'),
+    'status-icon': new MockElement('status-icon'),
+    'status-title': new MockElement('status-title'),
+    'status-desc': new MockElement('status-desc'),
     'status-message': new MockElement('status-message')
   };
 
@@ -140,34 +144,40 @@ test('Popup integration: loading, saving, removing, and error handling', () => {
     chrome: mockChrome,
     URLValidator,
     window: { URLValidator },
-    console
+    console,
+    setTimeout,
+    clearTimeout
   });
   vm.runInContext(popupCode, context);
 
   // 1. Initial open without saved configuration: empty input and functional interface
   documentListeners['DOMContentLoaded']();
   assert.equal(elements['url-input'].value, '');
-  assert.equal(elements['status-message'].textContent, '');
+  assert.equal(elements['status-title'].textContent, '');
 
   // 2. Empty submission attempt
   elements['url-input'].value = '   ';
   elements['btn-save'].trigger('click');
-  assert.equal(elements['status-message'].textContent, 'Por favor, informe um endereço de site.');
-  assert.equal(elements['status-message'].classList.contains('error'), true);
+  assert.equal(elements['status-title'].textContent, 'Por favor, informe um endereço de site.');
+  assert.equal(elements['status-card'].classList.contains('error'), true);
+  assert.equal(elements['status-card'].classList.contains('visible'), true);
 
   // 3. Invalid submission attempt
   elements['url-input'].value = 'javascript:alert(1)';
   elements['btn-save'].trigger('click');
-  assert.equal(elements['status-message'].textContent, 'Endereço inválido. Informe um endereço válido (http ou https).');
-  assert.equal(elements['status-message'].classList.contains('error'), true);
+  assert.equal(elements['status-title'].textContent, 'Endereço inválido');
+  assert.equal(elements['status-card'].classList.contains('error'), true);
 
-  // 4. Save google.com: should save https://google.com
+  // 4. Save google.com: should save https://google.com with "Site salvo com sucesso!" and "Sua nova guia já está configurada."
   elements['url-input'].value = 'google.com';
   elements['btn-save'].trigger('click');
   assert.equal(storageStore['customNewTabUrl'], 'https://google.com');
   assert.equal(elements['url-input'].value, 'https://google.com');
-  assert.equal(elements['status-message'].textContent, 'Endereço salvo com sucesso!');
-  assert.equal(elements['status-message'].classList.contains('error'), false);
+  assert.equal(elements['status-title'].textContent, 'Site salvo com sucesso!');
+  assert.equal(elements['status-desc'].textContent, 'Sua nova guia já está configurada.');
+  assert.equal(elements['status-card'].classList.contains('success'), true);
+  assert.equal(elements['status-card'].classList.contains('error'), false);
+  assert.ok(elements['status-icon'].innerHTML.includes('svg'));
 
   // 5. Reopening popup restores saved URL
   elements['url-input'].value = '';
@@ -179,14 +189,16 @@ test('Popup integration: loading, saving, removing, and error handling', () => {
   elements['btn-save'].trigger('click');
   assert.equal(storageStore['customNewTabUrl'], 'http://localhost:3000');
   assert.equal(elements['url-input'].value, 'http://localhost:3000');
-  assert.equal(elements['status-message'].textContent, 'Endereço salvo com sucesso!');
+  assert.equal(elements['status-title'].textContent, 'Site salvo com sucesso!');
+  assert.equal(elements['status-desc'].textContent, 'Sua nova guia já está configurada.');
 
   // 7. Remove configuration: deletes key and clears input
   elements['btn-clear'].trigger('click');
   assert.equal(storageStore['customNewTabUrl'], undefined);
   assert.equal(elements['url-input'].value, '');
-  assert.equal(elements['status-message'].textContent, 'Configuração removida com sucesso!');
-  assert.equal(elements['status-message'].classList.contains('error'), false);
+  assert.equal(elements['status-title'].textContent, 'Configuração restaurada');
+  assert.equal(elements['status-card'].classList.contains('success'), true);
+  assert.equal(elements['status-card'].classList.contains('error'), false);
 
   // 8. Reopening popup after removal shows empty input
   documentListeners['DOMContentLoaded']();
@@ -196,14 +208,14 @@ test('Popup integration: loading, saving, removing, and error handling', () => {
   simulateLastError = true;
   elements['url-input'].value = 'google.com';
   elements['btn-save'].trigger('click');
-  assert.equal(elements['status-message'].textContent, 'Falha ao salvar o endereço no armazenamento.');
-  assert.equal(elements['status-message'].classList.contains('error'), true);
+  assert.equal(elements['status-title'].textContent, 'Falha ao salvar');
+  assert.equal(elements['status-card'].classList.contains('error'), true);
 
   elements['btn-clear'].trigger('click');
-  assert.equal(elements['status-message'].textContent, 'Falha ao remover a configuração.');
-  assert.equal(elements['status-message'].classList.contains('error'), true);
+  assert.equal(elements['status-title'].textContent, 'Falha ao restaurar');
+  assert.equal(elements['status-card'].classList.contains('error'), true);
 
   documentListeners['DOMContentLoaded']();
-  assert.equal(elements['status-message'].textContent, 'Não foi possível carregar a configuração salva.');
-  assert.equal(elements['status-message'].classList.contains('error'), true);
+  assert.equal(elements['status-title'].textContent, 'Não foi possível carregar a configuração');
+  assert.equal(elements['status-card'].classList.contains('error'), true);
 });

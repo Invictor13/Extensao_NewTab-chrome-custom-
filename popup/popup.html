@@ -33,7 +33,15 @@
         <button type="button" id="btn-clear" class="btn btn-secondary">Restaurar Padrão</button>
       </div>
 
-      <div id="status-message" class="status-message" aria-live="polite"></div>
+      <div id="status-message" class="status-message" aria-live="polite">
+        <div class="status-card" id="status-card">
+          <span class="status-icon" id="status-icon" aria-hidden="true"></span>
+          <div class="status-content">
+            <span class="status-title" id="status-title"></span>
+            <span class="status-desc" id="status-desc"></span>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="footer">

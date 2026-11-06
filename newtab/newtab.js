@@ -23,21 +23,42 @@
   }
 
   /**
-   * Exibe mensagens de feedback na página de nova guia.
+   * Revela a interface visual da New Tab quando necessário (ex.: sem URL configurada, erro ou loop).
+   */
+  function revealUI(callback) {
+    const applyReveal = () => {
+      const wrapper = document.querySelector && (document.querySelector('.newtab-wrapper') || document.querySelector('.welcome-card'));
+      if (wrapper && wrapper.classList) {
+        wrapper.classList.add('visible');
+      }
+      if (callback) callback();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyReveal, { once: true });
+    } else {
+      applyReveal();
+    }
+  }
+
+  /**
+   * Exibe mensagens de feedback na página de nova guia e torna a interface visível.
    *
    * @param {string} message - Texto a ser exibido.
    * @param {boolean} isError - Indica se a mensagem deve receber estilo de erro.
    */
   function showStatus(message, isError = false) {
-    const statusElement = document.getElementById('newtab-status');
-    if (!statusElement) return;
+    revealUI(() => {
+      const statusElement = document.getElementById('newtab-status');
+      if (!statusElement) return;
 
-    statusElement.textContent = message;
-    if (isError) {
-      statusElement.classList.add('error');
-    } else {
-      statusElement.classList.remove('error');
-    }
+      statusElement.textContent = message;
+      if (isError) {
+        statusElement.classList.add('error');
+      } else {
+        statusElement.classList.remove('error');
+      }
+    });
   }
 
   /**
@@ -156,8 +177,7 @@
           return;
         }
 
-        // Caso 5: URL válida - efetuar redirecionamento
-        showStatus('Redirecionando...');
+        // Caso 5: URL válida - efetuar redirecionamento imediato sem renderizar/exibir a interface
         redirectTo(normalizedUrl);
       });
     } catch {
@@ -165,10 +185,8 @@
     }
   }
 
-  // Se o DOM já estiver pronto, executa imediatamente; caso contrário aguarda DOMContentLoaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleNewTab);
-  } else {
-    handleNewTab();
-  }
+  // Executa o mais cedo possível para redirecionar antes de renderizar o DOM.
+  // Não aguarda DOMContentLoaded para disparar a busca em chrome.storage.local
+  // e redirecionar, garantindo redirecionamento verdadeiramente instantâneo.
+  handleNewTab();
 })();
