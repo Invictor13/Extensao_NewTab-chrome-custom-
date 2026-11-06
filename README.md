@@ -46,6 +46,8 @@ Extensao_NewTab-chrome-custom-/
 │   │   ├── icon16.png        # Ícone da extensão para favicons e menus (16x16)
 │   │   ├── icon48.png        # Ícone da extensão para gerenciador de extensões (48x48)
 │   │   └── icon128.png       # Ícone de alta resolução para Chrome Web Store (128x128)
+│   ├── store/                # Diretório reservado para capturas e materiais visuais da loja
+│   │   └── README.md         # Diretrizes técnicas para screenshots reais e promo tiles
 │   └── logo.png              # Logotipo oficial em alta definição (símbolo + tipografia)
 ├── newtab/
 │   ├── newtab.html           # Página de substituição da Nova Guia (chrome_url_overrides)
@@ -63,6 +65,7 @@ Extensao_NewTab-chrome-custom-/
 │   ├── newtab-redirect.test.js      # Testes automatizados do ciclo da Nova Guia
 │   ├── package.test.js              # Testes automatizados de integridade do pacote ZIP
 │   └── popup-and-validator.test.js  # Testes automatizados de validação e popup
+├── PRIVACY.md                # Política de Privacidade e transparência de dados
 ├── STORE.md                  # Materiais e especificações para submissão na Chrome Web Store
 ├── manifest.json             # Manifesto de configuração da extensão (V3)
 └── README.md                 # Documentação completa do projeto
@@ -169,6 +172,14 @@ node --test
 - [x] **PR04 — Polimento Final, Documentação e Preparação para Chrome Web Store:** Auditoria técnica completa, aprimoramentos de acessibilidade, documentação expandida e kit de submissão para a loja.
 - [x] **PR05 — Refinamento da Experiência de Salvamento e Redirecionamento Instantâneo:** Ajustes de transição, mitigação de flashes de tela e polimento de UX.
 - [x] **PR06 — Pacote Oficial de Distribuição e Preparação para Release:** Automação e validação estrita da geração do ZIP oficial de produção (`dist/new-tab-custom-v1.0.0.zip`) sem arquivos de desenvolvimento.
+- [x] **PR07 — Auditoria de Conformidade e Preparação para Chrome Web Store:** Auditoria completa e diagnósticos técnicos para a loja.
+- [x] **PR08 — Documentação, Política de Privacidade e Preparação dos Materiais da Chrome Web Store:** Criação de `PRIVACY.md`, estruturação de `assets/store/`, revisão de requisitos e refinamento documental.
+
+---
+
+## 🔒 Privacidade
+
+A extensão prioriza a segurança e transparência: os dados são salvos exclusivamente no armazenamento local do navegador do usuário através de `chrome.storage.local`. Não há rastreamento, telemetria, analytics ou envio de dados para servidores externos. Para mais detalhes, consulte a [Política de Privacidade](PRIVACY.md).
 
 ---
 
@@ -183,4 +194,4 @@ node --test
 
 ## 📄 Licença
 
-Este projeto é disponibilizado sob a licença [MIT](LICENSE).
+Os direitos autorais deste projeto pertencem ao desenvolvedor Victor Ladislau Viana. A definição e formalização dos termos de licença de uso do código-fonte permanecem a critério do proprietário do repositório.
