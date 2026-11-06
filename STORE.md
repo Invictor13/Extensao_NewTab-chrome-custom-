@@ -11,6 +11,7 @@ Este documento reúne todas as informações, textos comerciais, requisitos de d
 - **Idioma principal:** Português (Brasil) — `pt-BR`
 - **Público-alvo:** Usuários que desejam definir uma página inicial customizada ao abrir uma nova guia no Google Chrome.
 - **Preço:** Gratuito
+- **Licença do Código-Fonte:** [MIT](LICENSE) (Nota: refere-se à licença do código aberto do repositório, não substituindo nem interferindo nos termos de distribuição e uso da Chrome Web Store).
 
 ---
 
